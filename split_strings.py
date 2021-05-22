@@ -41,16 +41,13 @@ def split_strings(line):
     '''
     切分字符串
     '''
-    new_line = ""
     p = re.sub(r"(\W+)", repl, line)
     p = re.sub(r'(\w+)', df, p)
     p = re.sub(r'(\s+)', ' ', p)
-    new_line.append(p.strip() + '\n')
-
-    return new_line
+    return p.strip() + '\n'
 
 
-def filter_en(funs, coms):
+def filter_en_json(funs, coms):
     '''
     去除空的或者非英文的代码注释对
     '''
@@ -67,6 +64,25 @@ def filter_en(funs, coms):
 
     # 去重
     return list(set(index))
+
+def filter_en(funs, coms):
+    '''
+    去除空的或者非英文的代码注释对
+    '''
+    index = []
+    pattern = re.compile(u'[^\u0000-\u007E]+', re.UNICODE)
+    # 代码
+    for i,v in enumerate(funs):
+        if re.search(pattern, v) or v == '':
+            index.append(i)
+
+    # 注释
+    for i,v in enumerate(coms):
+        if re.search(pattern, v) or v == '':
+            index.append(i)
+
+    # 去重
+    return list(set(index))    
 
 
 def filter_ast(funs):
