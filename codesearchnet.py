@@ -1,21 +1,27 @@
-import javalang
-
 import read_write as rw
 import split_strings as ss
 
-'''
-path = "/data/zdj/vocab/codesearchnet/java/"
+
+def json2file(json_name, file_name):
+    import re
+    data = rw.load_json(json_name)
+    with open(file_name, 'w') as f:
+        for k,v in data.items():
+            v = re.sub('\n|\t', ' ', v)
+            f.write(v.strip() + "\n")
+    return
+
+path = "/data/zdj/vocab/codesearchnet/python/"
+json2file(path + "funs.json", path + "funs")
+json2file(path + "coms.json", path + "coms")
+
 coms = rw.read_file(path + "coms")
 funs = rw.read_file(path + "funs")
 
 index  = ss.filter_en(funs, coms)
 
-print(len(index)) # 14814
-print(index[:10])
-'''
+print(len(index))  # java 14814 # go 3308
 
-""" 
-切分字符
 com_split = []
 for i,com in enumerate(coms):
     if i not in index:
@@ -29,14 +35,3 @@ for i,fun in enumerate(funs):
         fun_split.append(ss.split_strings(fun))
 
 rw.write_file(path + "funs.split", fun_split) 
-"""
-
-'''
-文氏图
-'''
-import matplotlib.pyplot as plt
-from matplotlib_venn import venn2
-
-plt.figure()
-venn2(subsets=(113428,46930,34023), set_labels=('代码词库', '注释词库'))
-plt.show()

@@ -36,7 +36,7 @@ def json2file(json_name, file_name):
         data = json.load(f)
     with open(file_name, 'w') as f:
         for k,v in data.items():
-            f.writelines(v.strip() + "\n")
+            f.write(v.strip() + "\n")
     return
 
 def read_jsonl(path, file_name, code, nl, func_name, project, length):
