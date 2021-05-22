@@ -11,7 +11,7 @@ def json2file(json_name, file_name):
             f.write(v.strip() + "\n")
     return
 
-path = "/data/zdj/vocab/codesearchnet/python/"
+path = "/data/zdj/vocab/codesearchnet/php/"
 json2file(path + "funs.json", path + "funs")
 json2file(path + "coms.json", path + "coms")
 
@@ -20,7 +20,7 @@ funs = rw.read_file(path + "funs")
 
 index  = ss.filter_en(funs, coms)
 
-print(len(index))  # java 14814 # go 3308
+print(len(index))  # java 14814 # go 3308 python 5110 php 28145
 
 com_split = []
 for i,com in enumerate(coms):
