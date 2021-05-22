@@ -1,5 +1,10 @@
+import javalang
+
+
 def get_ast(code):
-    # 输入：每次一个方法一行
+    '''
+    输入：每次一个方法一行
+    '''
     asts = []
     try:
         tokens = javalang.tokenizer.tokenize(code)
@@ -74,22 +79,3 @@ def get_ast(code):
         asts.append(ast)
 
     return asts
-
-
-def get_rideof_no_asts(code, nl, func_name, project):
-    error = []
-    asts = {}
-    for k,v in code.items():
-        ast = get_ast(v)
-        if len(ast) == 0:
-            error.append(k)
-        else:
-            asts[k] = ast
-
-    for k in error:
-        del code[k]
-        del nl[k]
-        del func_name[k]
-        del project[k]
-        
-    return code, nl, func_name, project, asts
