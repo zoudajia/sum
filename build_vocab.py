@@ -1,8 +1,5 @@
 import read_write as rw
-import javalang,re
-import sys
-sys.path.append(r'/home/zdj/work/pyvenn')
-import venn
+import re
 
 
 def repl(m):
@@ -52,8 +49,3 @@ write_set2file(path + "funs_vocab" + lowercase,list(funs_vocab))
 write_set2file(path + "funs_vocab_split"+ lowercase,list(funs_vocab_split))
 write_set2file(path + "coms_vocab"+ lowercase,list(coms_vocab))
 write_set2file(path + "coms_vocab_split"+ lowercase,list(coms_vocab_split))
-
-
-labels = venn.get_labels([funs_vocab, funs_vocab_split, coms_vocab_split, coms_vocab], fill=['number', 'percent'])
-fig, ax = venn.venn4(labels, names=['functions vocab', 'functions split vocab', 'comments split vocab', 'comments vocab'])
-fig.savefig(lang + lowercase +".png")
