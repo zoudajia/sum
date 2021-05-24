@@ -13,7 +13,7 @@ def at_word(m):
         return " " + tmp[-1].strip() + " "
     return " " + inner[1].strip() + " "
 
-def clean_coms(com):
+def filter_coms(com):
     #(?P<name>匹配模式)，反向应用时用(?P=name）
     if re.search('\<(?P<type>.*)\>(.*?)\<\/(?P=type)\>', com):
         com = re.sub('\<(?P<type>.*)\>(.*?)\<\/(?P=type)\>', dc, com, flags=re.S)
@@ -32,8 +32,10 @@ def get_first_line_coms(com):
     '''
     #v = re.sub('/|\*|\n|\t',' ', com)
     #v = re.sub('(\s+)', ' ', v)
-    v = clean_coms(com)
+    v = filter_coms(com)
     # 取第一行注释
     if re.search(r'(\.\s+)', v):
         v = v[:re.search(r'(\.\s+)', v).end()]
     return  v.strip() + "\n"
+
+

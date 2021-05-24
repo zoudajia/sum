@@ -1,8 +1,34 @@
 # 清理代码，代码内注释
-import json,re,sys,os,json_lines
-import numpy as np
-import pandas as pd
-from sklearn.model_selection import train_test_split
 import javalang
+import read_write as rw
 
 
+def filter_code(code):
+    '''
+    去除代码内部的注释
+    '''
+    cl_code = ""
+    try:
+        tokens = javalang.tokenizer.tokenize(code)
+        for i in tokens:
+            cl_code = cl_code + i.value + " "
+    except:
+        cl_code = ""
+    return cl_code
+
+
+def json2file(json_name, file_name):
+    import re
+    data = rw.load_json(json_name)
+    with open(file_name, 'w') as f:
+        for k,v in data.items():
+            v = re.sub('\n|\t', ' ', v)
+            v = filter_code(v)
+            v = re.sub('\n|\t', ' ', v)
+            f.write(v.strip() + "\n")
+    return
+
+
+lang = "java"  # 修改语言
+path = "/data/zdj/vocab/codesearchnet/" + lang + "/"
+json2file(path + "funs.json", path + "funs")

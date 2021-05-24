@@ -73,12 +73,12 @@ def filter_en(funs, coms):
     pattern = re.compile(u'[^\u0000-\u007E]+', re.UNICODE)
     # 代码
     for i,v in enumerate(funs):
-        if re.search(pattern, v) or v == '':
+        if re.search(pattern, v) or v == '\n':
             index.append(i)
 
     # 注释
     for i,v in enumerate(coms):
-        if re.search(pattern, v) or v == '':
+        if re.search(pattern, v) or v == '\n':
             index.append(i)
 
     # 去重

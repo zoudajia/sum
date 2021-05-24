@@ -1,4 +1,4 @@
-import json,json_lines
+import json,json_lines,re
 
 def load_json(file_name):
     with open(file_name, 'r') as f:
@@ -31,13 +31,36 @@ def write_data_without_index(file_name, data, index):
         for i in tmp:
             f.writelines(data[i]) 
 
-def json2file(json_name, file_name):
-    with open(json_name, 'r') as f:
-        data = json.load(f)
+def filter_code(code):
+    '''
+    去除代码内部的注释
+    '''
+    cl_code = ""
+    import javalang
+    try:
+        tokens = javalang.tokenizer.tokenize(code)
+        for i in tokens:
+            cl_code = cl_code + i.value + " "
+    except:
+        cl_code = ""
+    return cl_code
+
+
+def json2file(json_name, file_name, type="com"):
+    data = load_json(json_name)
+    import clean_coms
+    import clean_code
     with open(file_name, 'w') as f:
         for k,v in data.items():
+            if type == "fun":
+                v = clean_code.filter_code(v)
+            elif type == "com":
+                v = clean_coms.filter_coms(v)
+            v = re.sub('\n|\t|\r', ' ', v)
+            v = re.sub('\s+', ' ', v)
             f.write(v.strip() + "\n")
-    return
+    return 
+
 
 def read_jsonl(path, file_name, code, nl, func_name, project, length):
     with open(path + file_name, 'rb') as f:    

@@ -1,36 +1,47 @@
 import read_write as rw
 import split_strings as ss
+import sys
 
 
-def json2file(json_name, file_name):
-    import re
-    data = rw.load_json(json_name)
-    with open(file_name, 'w') as f:
-        for k,v in data.items():
-            v = re.sub('\n|\t', ' ', v)
-            f.write(v.strip() + "\n")
-    return
-
-path = "/data/zdj/vocab/codesearchnet/php/"
-json2file(path + "funs.json", path + "funs")
-json2file(path + "coms.json", path + "coms")
+lang = 'java'
+path = "/data/zdj/vocab/codesearchnet/" + lang + "/"
+rw.json2file(path + "funs.json", path + "funs", 'fun')
+rw.json2file(path + "coms.json", path + "coms", 'com')
 
 coms = rw.read_file(path + "coms")
 funs = rw.read_file(path + "funs")
 
+if len(coms) != len(funs):
+    print(len(coms), len(funs))
+    sys.exit()
+
+
+# 删除非英文注释对和空注释对
 index  = ss.filter_en(funs, coms)
 
-print(len(index))  # java 14814 # go 3308 python 5110 php 28145
+coms_e = []
+for i,v in enumerate(coms):
+    if i not in index:
+        coms_e.append(v.strip()+'\n')
 
+rw.write_file(path + "coms", coms_e)
+funs_e = []
+for i,v in enumerate(funs):
+    if i not in index:
+        funs_e.append(v.strip()+'\n')
+rw.write_file(path + "funs", funs_e)
+
+
+#切分字符
 com_split = []
-for i,com in enumerate(coms):
+for i,com in enumerate(coms_e):
     if i not in index:
         com_split.append(ss.split_strings(com))
 
 rw.write_file(path + "coms.split", com_split)
 
 fun_split = []
-for i,fun in enumerate(funs):
+for i,fun in enumerate(funs_e):
     if i not in index:
         fun_split.append(ss.split_strings(fun))
 
