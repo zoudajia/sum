@@ -22,9 +22,8 @@ def json2file(json_name, file_name):
     data = rw.load_json(json_name)
     with open(file_name, 'w') as f:
         for k,v in data.items():
-            v = re.sub('\n|\t', ' ', v)
             v = filter_code(v)
-            v = re.sub('\n|\t', ' ', v)
+            v = re.sub('\n|\t|\r', ' ', v)
             f.write(v.strip() + "\n")
     return
 

@@ -106,4 +106,22 @@ def filter_ast(funs):
 
     return list(set(index))
 
-    
+
+def get_identifier(funs):
+    '''
+    根据ast获取变量
+    funs: lines格式
+    返回key
+    '''
+    import javalang
+    vocab = set()
+    error = []
+    for k,v in enumerate(funs):
+        try:
+            tokens = javalang.tokenizer.tokenize(v)
+            for i in tokens:
+                if type(i) == javalang.tokenizer.Identifier:
+                    vocab.update(i.value)
+        except:
+            error.append(k)
+    return vocab, error
