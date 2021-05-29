@@ -23,13 +23,13 @@ def write_file(file_name, data):
 def write_data_with_index(file_name, data, index):
     with open(file_name, 'w') as f:
         for i in index:
-            f.writelines(data[i])
+            f.writelines(data[i] + '\n')
             
 def write_data_without_index(file_name, data, index):
     tmp = list(set(range(len(data))).difference(set(index)))            
     with open(file_name, 'w') as f:
         for i in tmp:
-            f.writelines(data[i]) 
+            f.writelines(data[i] + '\n') 
 
 def filter_code(code):
     '''
@@ -80,3 +80,11 @@ def read_jsonl(path, file_name, code, nl, func_name, project, length):
             func_name[key] = item['func_name']
             project[key] = item['repo']
     return code, nl, func_name, project, i + length + 1
+
+
+def write_set2file(file, data):
+    with open(file, 'w+') as f:
+        for i in range(len(data)):
+            f.write(data[i] + "\t")
+            if i % 10 == 0:
+                f.write('\n')

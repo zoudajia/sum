@@ -13,28 +13,24 @@ def get_vocab(lines, lowercase):
         # 是否小写
         if lowercase == ".lower":
             line = line.lower()
-
-        line = re.sub(r"(\W+)", repl, line)
-        line = re.sub(r'\s+', " ", line)
         tmp = line.split(' ')
-        
         data.update(set(tmp))
 
     return data
 
-lang = "php"  # 修改语言
+lang = "java"  # 修改语言
 lowercase = ".lower"
 #lowercase = ""
-path = "/data/zdj/vocab/codesearchnet/" + lang + "/"
-coms = rw.read_file(path + "coms")
+path = "/data/zdj/vocab/codesearchnet/" + lang + "/upper/"
+#coms = rw.read_file(path + "coms")
 coms_split = rw.read_file(path + "coms.split")
-funs = rw.read_file(path + "funs")
+#funs = rw.read_file(path + "funs")
 funs_split = rw.read_file(path + "funs.split")
 
 
-funs_vocab = get_vocab(funs, lowercase)
+#funs_vocab = get_vocab(funs, lowercase)
 funs_vocab_split = get_vocab(funs_split, lowercase)
-coms_vocab = get_vocab(coms, lowercase)
+#coms_vocab = get_vocab(coms, lowercase)
 coms_vocab_split = get_vocab(coms_split, lowercase)
 
 def write_set2file(file, data):
@@ -45,7 +41,7 @@ def write_set2file(file, data):
                 f.write('\n')
             
 
-write_set2file(path + "funs_vocab" + lowercase,list(funs_vocab))
+#write_set2file(path + "funs_vocab" + lowercase,list(funs_vocab))
 write_set2file(path + "funs_vocab_split"+ lowercase,list(funs_vocab_split))
-write_set2file(path + "coms_vocab"+ lowercase,list(coms_vocab))
+#write_set2file(path + "coms_vocab"+ lowercase,list(coms_vocab))
 write_set2file(path + "coms_vocab_split"+ lowercase,list(coms_vocab_split))

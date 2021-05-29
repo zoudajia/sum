@@ -93,7 +93,8 @@ def filter_ast(funs):
     '''
     import javalang
     index = []
-    for k,v in funs.items():
+    #for k,v in funs.items():
+    for k,v in enumerate(funs):
         try:
             tokens = javalang.tokenizer.tokenize(v)
             parser = javalang.parser.Parser(tokens)
@@ -121,7 +122,7 @@ def get_identifier(funs):
             tokens = javalang.tokenizer.tokenize(v)
             for i in tokens:
                 if type(i) == javalang.tokenizer.Identifier:
-                    vocab.update(i.value)
+                    vocab.add(i.value)
         except:
             error.append(k)
     return vocab, error

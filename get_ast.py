@@ -75,6 +75,10 @@ def get_ast(code):
             ast['value'] = 'void.class'
         elif ast['type'] == 'SuperConstructorInvocation':
             ast['value'] = 'super'
+        elif ast['type'] == 'IfStatement':
+            ast['value'] = 'if'
+        elif ast['type'] == 'WhileStatement':
+            ast['value'] = 'while'
 
         asts.append(ast)
 

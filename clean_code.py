@@ -27,7 +27,3 @@ def json2file(json_name, file_name):
             f.write(v.strip() + "\n")
     return
 
-
-lang = "java"  # 修改语言
-path = "/data/zdj/vocab/codesearchnet/" + lang + "/"
-json2file(path + "funs.json", path + "funs")
